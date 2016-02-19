@@ -23,6 +23,9 @@ class ArticlesController < ApplicationController
 
   def show
     find_article
+    
+    @comment = Comment.new
+    @comment.article_id = @article.id
   end
 
   def update

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :articles
+  root to: 'articles#index'
+  resources :articles do
+    resources :comments
+  end
 end
   #this creates:
   #articles GET /articles(.:format) articles#index
