@@ -1,42 +1,45 @@
 class ArticlesController < ApplicationController
+  include ArticlesHelper
   def index
     @articles = Article.all
   end
 
   def create
-    new_article
-    @article.title = params[:article][:title]
-    @article.body = params[:article][:body]
+    @article = Article.new(article_params)
     @article.save
+    
+    flash.notice = "Article '#{@article.title}' Created!"
 
     redirect_to article_path(@article.id)
   end
 
   def new
-    new_article
+    @article = Article.new
   end
-  
+
   def edit
+    find_article
   end
 
   def show
-    @article = find_article
+    find_article
   end
 
   def update
+    find_article
+    @article.update(article_params)
+
+    flash.notice = "Article '#{@article.title}' Updated!"
+    
+    redirect_to article_path(@article)
   end
 
   def destroy
-  end
+    find_article
+    @article.destroy
 
+    flash.notice = "Article '#{@article.title}' Destroyed!"
 
-  private
-
-  def find_article
-    @article = Article.find(params[:id])
-  end
-
-  def new_article
-    @article = Article.new
+    redirect_to articles_path
   end
 end
