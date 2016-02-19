@@ -13,6 +13,7 @@ class ArticlesController < ApplicationController
   end
 
   def show
+    @article = find_article
   end
 
   def update
