@@ -4,9 +4,16 @@ class ArticlesController < ApplicationController
   end
 
   def create
+    new_article
+    @article.title = params[:article][:title]
+    @article.body = params[:article][:body]
+    @article.save
+
+    redirect_to article_path(@article.id)
   end
 
   def new
+    new_article
   end
   
   def edit
@@ -27,5 +34,9 @@ class ArticlesController < ApplicationController
 
   def find_article
     @article = Article.find(params[:id])
+  end
+
+  def new_article
+    @article = Article.new
   end
 end
